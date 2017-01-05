@@ -1,0 +1,25 @@
+package time
+
+import (
+	"database/sql/driver"
+	"time"
+)
+
+type Time time.Time
+
+func (t Time) Format(fmt string) string {
+	return (time.Time)(t).Format(fmt)
+}
+func (t Time) Unix() int64 {
+	return (time.Time)(t).Unix()
+}
+func (t *Time) Scan(src interface{}) error {
+	*t = Time(src.(time.Time))
+	return nil
+}
+func (t Time) Value() (driver.Value, error) {
+	return []byte(t.Format("2006-01-02 15:04:05")), nil
+}
+func (t *Time) MarshalJSON() ([]byte, error) {
+	return []byte("\"" + t.Format("2006-01-02 15:04:05") + "\""), nil
+}
