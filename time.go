@@ -20,6 +20,26 @@ func (t *Time) Scan(src interface{}) error {
 func (t Time) Value() (driver.Value, error) {
 	return []byte(t.Format("2006-01-02 15:04:05")), nil
 }
-func (t *Time) MarshalJSON() ([]byte, error) {
+func (t Time) MarshalJSON() ([]byte, error) {
 	return []byte("\"" + t.Format("2006-01-02 15:04:05") + "\""), nil
+}
+
+
+type Date time.Time
+
+func (t Date) Format(fmt string) string {
+	return (time.Time)(t).Format(fmt)
+}
+func (t Date) Unix() int64 {
+	return (time.Time)(t).Unix()
+}
+func (t *Date) Scan(src interface{}) error {
+	*t = Date(src.(time.Time))
+	return nil
+}
+func (t Date) Value() (driver.Value, error) {
+	return []byte(t.Format("2006-01-02")), nil
+}
+func (t Date) MarshalJSON() ([]byte, error) {
+	return []byte("\"" + t.Format("2006-01-02") + "\""), nil
 }
