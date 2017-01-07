@@ -17,11 +17,14 @@ func (t *Time) Scan(src interface{}) error {
 	*t = Time(src.(time.Time))
 	return nil
 }
+func (t Time) String() string {
+	return t.Format("2006-01-02 15:04:05")
+}
 func (t Time) Value() (driver.Value, error) {
-	return []byte(t.Format("2006-01-02 15:04:05")), nil
+	return []byte(t.String()), nil
 }
 func (t Time) MarshalJSON() ([]byte, error) {
-	return []byte("\"" + t.Format("2006-01-02 15:04:05") + "\""), nil
+	return []byte("\"" + t.String() + "\""), nil
 }
 
 
@@ -37,9 +40,12 @@ func (t *Date) Scan(src interface{}) error {
 	*t = Date(src.(time.Time))
 	return nil
 }
+func (t Date) String() string {
+	return t.Format("2006-01-02")
+}
 func (t Date) Value() (driver.Value, error) {
-	return []byte(t.Format("2006-01-02")), nil
+	return []byte(t.String()), nil
 }
 func (t Date) MarshalJSON() ([]byte, error) {
-	return []byte("\"" + t.Format("2006-01-02") + "\""), nil
+	return []byte("\"" + t.String() + "\""), nil
 }
