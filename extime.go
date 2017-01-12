@@ -1,17 +1,8 @@
-package time
+package extime
 
 import (
 	"database/sql/driver"
 	"time"
-)
-
-const (
-	Nanosecond  time.Duration = time.Nanosecond
-	Microsecond               = time.Microsecond
-	Millisecond               = time.Millisecond
-	Second                    = time.Second
-	Minute                    = time.Minute
-	Hour                      = time.Hour
 )
 
 type Time time.Time
@@ -63,3 +54,4 @@ func (t Date) Value() (driver.Value, error) {
 func (t Date) MarshalJSON() ([]byte, error) {
 	return []byte("\"" + t.String() + "\""), nil
 }
+
