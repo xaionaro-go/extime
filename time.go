@@ -5,6 +5,15 @@ import (
 	"time"
 )
 
+const (
+	Nanosecond  time.Duration = time.Nanosecond
+	Microsecond               = time.Microsecond
+	Millisecond               = time.Millisecond
+	Second                    = time.Second
+	Minute                    = time.Minute
+	Hour                      = time.Hour
+)
+
 type Time time.Time
 
 func (t Time) Format(fmt string) string {
@@ -26,7 +35,6 @@ func (t Time) Value() (driver.Value, error) {
 func (t Time) MarshalJSON() ([]byte, error) {
 	return []byte("\"" + t.String() + "\""), nil
 }
-
 
 type Date time.Time
 
