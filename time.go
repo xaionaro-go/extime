@@ -22,6 +22,9 @@ func (t Time) Format(fmt string) string {
 func (t Time) Unix() int64 {
 	return (time.Time)(t).Unix()
 }
+func (t Time) UnixNano() int64 {
+	return (time.Time)(t).UnixNano()
+}
 func (t *Time) Scan(src interface{}) error {
 	*t = Time(src.(time.Time))
 	return nil
@@ -43,6 +46,9 @@ func (t Date) Format(fmt string) string {
 }
 func (t Date) Unix() int64 {
 	return (time.Time)(t).Unix()
+}
+func (t Date) UnixNano() int64 {
+	return (time.Time)(t).UnixNano()
 }
 func (t *Date) Scan(src interface{}) error {
 	*t = Date(src.(time.Time))
