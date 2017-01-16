@@ -7,6 +7,11 @@ import (
 
 type Time time.Time
 
+func ParseTime (layout, value string) (Time, error) {
+	time, err := time.Parse(layout, value)
+	return Time(time), err
+}
+
 func (t Time) Format(fmt string) string {
 	return (time.Time)(t).Format(fmt)
 }
@@ -29,8 +34,16 @@ func (t Time) Value() (driver.Value, error) {
 func (t Time) MarshalJSON() ([]byte, error) {
 	return []byte("\"" + t.String() + "\""), nil
 }
+func (t Time) IsInFuture() bool {
+	return t.UnixNano() > time.Now().UnixNano()
+}
 
 type Date time.Time
+
+func ParseDate (layout, value string) (Date, error) {
+	time, err := time.Parse(layout, value)
+	return Date(time), err
+}
 
 func (t Date) Format(fmt string) string {
 	return (time.Time)(t).Format(fmt)
@@ -53,5 +66,8 @@ func (t Date) Value() (driver.Value, error) {
 }
 func (t Date) MarshalJSON() ([]byte, error) {
 	return []byte("\"" + t.String() + "\""), nil
+}
+func (t Date) IsInFuture() bool {
+	return t.UnixNano() > time.Now().UnixNano()
 }
 
