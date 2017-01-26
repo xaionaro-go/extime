@@ -37,6 +37,9 @@ func (t Time) MarshalJSON() ([]byte, error) {
 func (t Time) IsInFuture() bool {
 	return t.UnixNano() > time.Now().UnixNano()
 }
+func (t Time) Date() Date {
+	return Date(t)
+}
 
 type Date time.Time
 
@@ -69,5 +72,15 @@ func (t Date) MarshalJSON() ([]byte, error) {
 }
 func (t Date) IsInFuture() bool {
 	return t.UnixNano() > time.Now().UnixNano()
+}
+func (t Date) Time() Time {
+	return Time(t)
+}
+
+func Now() Time {
+	return Time(time.Now())
+}
+func NowDate() Date {
+	return Date(time.Now())
 }
 
