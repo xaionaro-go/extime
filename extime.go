@@ -2,6 +2,7 @@ package extime
 
 import (
 	"database/sql/driver"
+	"fmt"
 	"time"
 )
 
@@ -21,9 +22,16 @@ func (t Time) Unix() int64 {
 func (t Time) UnixNano() int64 {
 	return (time.Time)(t).UnixNano()
 }
-func (t *Time) Scan(src interface{}) error {
-	*t = Time(src.(time.Time))
-	return nil
+func (t *Time) Scan(src interface{}) (err error) {
+	switch srcTyped := src.(type) {
+	case time.Time:
+		*t = Time(srcTyped)
+	case []uint8:
+		*t, err = ParseTime("2006-01-02 15:04:05", string(srcTyped))
+	default:
+		err = fmt.Errorf("don't know how to covert %T (\"%v\") to extime.Time", src, src)
+	}
+	return
 }
 func (t Time) String() string {
 	return t.Format("2006-01-02 15:04:05")
