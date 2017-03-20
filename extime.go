@@ -65,9 +65,21 @@ func (t Date) Unix() int64 {
 func (t Date) UnixNano() int64 {
 	return (time.Time)(t).UnixNano()
 }
-func (t *Date) Scan(src interface{}) error {
-	*t = Date(src.(time.Time))
-	return nil
+func (t *Date) Scan(src interface{}) (err error) {
+	switch srcTyped := src.(type) {
+	case time.Time:
+		*t = Date(srcTyped)
+	case []uint8:
+		var tTmp Time
+		tTmp, err = ParseTime("2006-01-02", string(srcTyped))
+		if err != nil {
+			tTmp, err = ParseTime("2006-01-02 15:04:05", string(srcTyped))
+		}
+		*t = Date(tTmp)
+	default:
+		err = fmt.Errorf("don't know how to covert %T (\"%v\") to extime.Time", src, src)
+	}
+	return
 }
 func (t Date) String() string {
 	return t.Format("2006-01-02")
