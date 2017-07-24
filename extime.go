@@ -48,6 +48,9 @@ func (t Time) IsInFuture() bool {
 func (t Time) Date() Date {
 	return Date(t)
 }
+func (t Time) AddDate(years int, months int, days int) Time {
+	return Time(time.Time(t).AddDate(years, months, days))
+}
 
 type Date time.Time
 
@@ -95,6 +98,9 @@ func (t Date) IsInFuture() bool {
 }
 func (t Date) Time() Time {
 	return Time(t)
+}
+func (t Date) AddDate(years int, months int, days int) Date {
+	return Date(time.Time(t).AddDate(years, months, days))
 }
 
 func Now() Time {
