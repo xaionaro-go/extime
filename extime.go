@@ -8,7 +8,7 @@ import (
 
 type Time time.Time
 
-func ParseTime (layout, value string) (Time, error) {
+func ParseTime(layout, value string) (Time, error) {
 	time, err := time.Parse(layout, value)
 	return Time(time), err
 }
@@ -54,7 +54,7 @@ func (t Time) AddDate(years int, months int, days int) Time {
 
 type Date time.Time
 
-func ParseDate (layout, value string) (Date, error) {
+func ParseDate(layout, value string) (Date, error) {
 	time, err := time.Parse(layout, value)
 	return Date(time), err
 }
@@ -109,4 +109,3 @@ func Now() Time {
 func NowDate() Date {
 	return Date(time.Now())
 }
-
