@@ -44,9 +44,9 @@ func (t *Time) Scan(src interface{}) (err error) {
 	}
 
 	var tTmp Time
-	tTmp, err = ParseTime("2006-01-02", srcStr)
+	tTmp, err = ParseTime("2006-01-02 15:04:05", srcStr)
 	if err != nil {
-		tTmp, err = ParseTime("2006-01-02 15:04:05", srcStr)
+		tTmp, err = ParseTime("2006-01-02", srcStr)
 	}
 	*t = Time(tTmp)
 	return
